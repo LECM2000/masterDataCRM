@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/compat/storage';
 import { ImageUploadServiceService } from 'src/app/services/image-upload-service.service';
 import { DatabaseFirebaseService } from 'src/app/services/database-firebase.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -17,6 +17,10 @@ export class MyPerfilComponent {
   uuid:any;
   images: File[] = [];
   newPerfil =false;
+  name='';
+  phone='';
+  email='';
+  imageUrl='';
   constructor(private databaseFirebaseService: DatabaseFirebaseService,
     private imageUploadService: ImageUploadServiceService,
     private storage: AngularFireStorage,
@@ -25,7 +29,16 @@ export class MyPerfilComponent {
 
   }
   ngOnInit(){
-    this.createForm()
+    this.uuid= this.route.snapshot.queryParamMap.get('uid')
+    this.createForm();
+    this.firebaseService.getDoc('perfiles', this.uuid).subscribe( (result:any)=>{
+      this.name=result.name
+     this.phone = result.phone
+     this.email = result.email
+   this.imageUrl = result.images[0];
+     console.log(result.images[0])
+    })
+
   }
   createForm(){
     this.perfil= new FormGroup({
@@ -110,4 +123,12 @@ export class MyPerfilComponent {
   handleImageChange(event: any) {
     this.images = Array.from(event.target.files);
   }
+  getImageReference(imagePath: string): AngularFireStorageReference {
+    return this.storage.ref(imagePath);
+  }
+  getImageUrl(imagePath: string): Promise<string> {
+    const ref = this.getImageReference(imagePath);
+    return ref.getDownloadURL().toPromise();
+  }
+  
 }

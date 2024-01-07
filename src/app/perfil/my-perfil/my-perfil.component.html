@@ -5,6 +5,18 @@
     <button class="btn btn-info btn-lg btn-block" (click)="addPerfil()" style="margin-left: 1cm; color: white;">Registro</button>
 </div>
 
+
+<div class="container">
+    <div class="image-container">
+        <img [src]="imageUrl" alt="Imagen Firebase" class="rounded-image">
+    </div>
+    <p>Nombre: {{name}}</p>
+    <p>Teléfono: {{phone}}</p>
+    <p>Correo Electrónico: {{email}}</p>
+</div>
+
+
+
 <body *ngIf="newPerfil===true">
    
     <div id="container"></div>
