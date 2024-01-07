@@ -15,5 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeRoutingModule,
     ReactiveFormsModule
   ],
+  exports:[
+    FirstMenuComponent
+  ]
 })
 export class HomeModule { }
