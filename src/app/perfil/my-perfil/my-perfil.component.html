@@ -1,0 +1,72 @@
+
+<header><app-first-menu></app-first-menu></header>
+
+<div>
+    <button class="btn btn-info btn-lg btn-block" (click)="addPerfil()" style="margin-left: 1cm; color: white;">Registro</button>
+</div>
+
+<body *ngIf="newPerfil===true">
+   
+    <div id="container"></div>
+    <script id="template"></script>
+   
+    
+    <div class="contact-wrapper">
+       
+
+      <div class="envelope">
+        <div class="back paper"></div>
+        <div class="content">
+          <div class="form-wrapper">
+            <button class="btn btn-danger" (click)="closeAddPerfil()" style="margin-top: 80px;">X</button>
+            <form novalidate [formGroup]="perfil" (ngSubmit)="setPerfil()">
+              <div class="top-wrapper">
+                <div class="input">
+                  <style>
+                    .input label,
+                    .input input {
+                      color: rgb(255, 255, 255);
+                      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+                      /* cambio de color general y de estilo a todos los títulos */
+                    }
+                  </style>
+                  <label style="color: rgb(255, 166, 0); text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); font-size: 25px;">Nombre</label>
+                  <input type="text" name="name"  formControlName="name" />
+                </div>
+                <div class="input">
+                  <label style="font-size: 20px;">Número telefónico</label>
+                  <input type="text" name="phone"  formControlName="phone" />
+                </div>
+                <div class="input">
+                    <label style="font-size: 20px;">Correo</label>
+                    <input type="text" name="_replyto"  formControlName="email" />
+                  </div>
+               
+              </div>
+              <div class="bottom-wrapper">
+                <!-- <div class="input">
+                  <label style="font-size: 20px; margin-top: 1cm;">Trabajo a realizar en el equipo</label>
+                  </div> -->
+                 
+               
+                <div style="margin-top: 0.2cm;">
+                  <label for="imageInput" style="font-size: 20px;">Subir imágenes:</label>
+                  <input type="file" id="imageInput" name="images" accept="image/*" multiple (change)="handleImageChange($event)">
+                </div>
+  
+                <!-- Visualización de imágenes cargadas -->
+                
+  
+                <div class="submit" style="margin-top: 1cm;">
+                  <div class="submit-card" (click)="setPerfil()">Agregar</div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- home.component.html -->
+  
+    
+  </body>
