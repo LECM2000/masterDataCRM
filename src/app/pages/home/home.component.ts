@@ -65,10 +65,20 @@ export class HomeComponent {
   }
 
   getData() {
+    
     this.databaseFirebaseService.getAllDocs('reportes').subscribe((result:any)=>{
       console.log(result)
+
       result.map((data:any)=>{
-        this.reportes.push(data)
+        this.uuid= this.route.snapshot.queryParamMap.get('uid')
+        console.log('este es data->',data.employment)
+        console.log('Mi UID->', this.uuid)
+        if(data.employment===this.uuid){
+          this.reportes.push(data)
+        }
+          
+        
+       
       })
     })
   }
