@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DatabaseFirebaseService } from 'src/app/services/database-firebase.service';
-import { FormGroup,FormControl,Validators,FormBuilder, FormControlDirective, } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { ImageUploadServiceService } from 'src/app/services/image-upload-service.service';
@@ -158,5 +158,4 @@ export class HomeComponent {
     this.elementoActivo = null;
     this.reporteSeleccionado = null;
   }
-
 }
