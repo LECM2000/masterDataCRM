@@ -12,6 +12,12 @@ import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+goBack() {
+throw new Error('Method not implemented.');
+}
+closeForm() {
+throw new Error('Method not implemented.');
+}
   elementoActivo: any;
   detallesVisible: boolean = false;
   reporteSeleccionado: any;
@@ -44,6 +50,10 @@ export class HomeComponent {
   addJob() {
     this.newJob = true;
   }
+  closeAddJob() {
+    this.newJob = false;
+  }
+
 
   createForm() {
     this.jobs = new FormGroup({
