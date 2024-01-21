@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { v4 as uuidv4 } from 'uuid';
-
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 @Injectable({
@@ -44,10 +44,17 @@ export class DatabaseFirebaseService {
   }
 
 
-  getAllDocs<tipo>(path: string): Observable<tipo[]> {
+  getAllDocs<tipo>(path: string): Observable<{ id: string, data: tipo }[]> {
     const collection = this.firestore.collection<tipo>(path);
-    return collection.valueChanges().pipe(
-      filter(docs => docs !== undefined)
+    
+    return collection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as tipo;
+          return { id, data };
+        });
+      })
     );
   }
   

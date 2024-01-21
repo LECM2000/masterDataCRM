@@ -33,18 +33,24 @@ throw new Error('Method not implemented.');
   images: File[] = [];
   uuid: any;
   reportes:any=[]
+  edit=false;
+  reportEdit:any;
+  editJob!:FormGroup;
+  newData:any;
+  idEdit:any;
   constructor(
     private databaseFirebaseService: DatabaseFirebaseService,
     private imageUploadService: ImageUploadServiceService,
     private storage: AngularFireStorage,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.getData();
     this.createForm();
-   this.uuid= this.route.snapshot.queryParamMap.get('uuid')
-    
+   this.uuid= this.route.snapshot.queryParamMap.get('uuid');
+   this.form();
   }
 
   addJob() {
@@ -53,7 +59,11 @@ throw new Error('Method not implemented.');
   closeAddJob() {
     this.newJob = false;
   }
-
+form(){
+  this.editJob = new FormGroup({
+    status: new FormControl('')
+  })
+}
 
   createForm() {
     this.jobs = new FormGroup({
@@ -61,6 +71,7 @@ throw new Error('Method not implemented.');
       phone: new FormControl(''),
       email: new FormControl('', Validators.email),
       subject: new FormControl(''),
+      status: new FormControl(''),
       message: new FormControl('')
     });
   }
@@ -75,23 +86,23 @@ throw new Error('Method not implemented.');
   }
 
   getData() {
-    
-    this.databaseFirebaseService.getAllDocs('reportes').subscribe((result:any)=>{
-      console.log(result)
-
-      result.map((data:any)=>{
-        this.uuid= this.route.snapshot.queryParamMap.get('uid')
-        console.log('este es data->',data.employment)
-        console.log('Mi UID->', this.uuid)
-        if(data.employment===this.uuid){
-          this.reportes.push(data)
+    this.databaseFirebaseService.getAllDocs('reportes').subscribe((result: { id: string, data: any }[]) => {
+      console.log('este es ', result);
+      
+      result.map((doc: { id: string, data: any }) => {
+        this.uuid = this.route.snapshot.queryParamMap.get('uid');
+        console.log('este es data->', doc.data.employment);
+        console.log('Mi UID->', this.uuid);
+  
+        if (doc.data.employment === this.uuid) {
+          // Agrega el ID al objeto antes de agregarlo al array
+          this.reportes.push({ id: doc.id, ...doc.data });
         }
-          
-        
-       
-      })
-    })
+      });
+    });
   }
+  
+  
 
   setJob() {
     this.uuid= this.route.snapshot.queryParamMap.get('uid')
@@ -100,6 +111,7 @@ throw new Error('Method not implemented.');
       phone: this.jobs.value.phone,
       email: this.jobs.value.email,
       subject: this.jobs.value.subject,
+      status: this.jobs.value.status,
       message: this.jobs.value.message, 
       employment: this.uuid
     };
@@ -177,5 +189,42 @@ throw new Error('Method not implemented.');
     this.detallesVisible = false;
     this.elementoActivo = null;
     this.reporteSeleccionado = null;
+  }
+  sendJob(reporte:any){
+    console.log(reporte)
+    const id : NavigationExtras = {
+      queryParams:{
+        id: reporte
+      }
+    }
+    this.router.navigate(['share'], id);
+  }
+  editReport(reporte:any, id:any){
+    console.log(reporte);
+    this.reportEdit=reporte;
+    this.edit=true;
+    const data = {
+      name: reporte.name,
+      phone: reporte.phone,
+      email: reporte.email,
+      subject: reporte.subject,
+      status: this.editJob.value.status,
+      message: reporte.message, 
+      employment: this.uuid
+    };
+    this.newData= data
+    this.idEdit=id;
+    
+  }
+  closeEdit(){
+   
+    this.edit=false;
+  }
+  setEdit(){
+    this.databaseFirebaseService.updateDoc(this.newData, 'reportes', this.idEdit).then(result=>{
+      alert('Se ha modificado')
+    }).catch(error=>{
+      alert('No se modifico')
+    })
   }
 }
