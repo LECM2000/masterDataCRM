@@ -221,8 +221,12 @@ form(){
     this.edit=false;
   }
   setEdit(){
+  console.log('si se manda!!!!')
+    console.log(this.newData.status)
+    this.newData.status= this.editJob.value.status
     this.databaseFirebaseService.updateDoc(this.newData, 'reportes', this.idEdit).then(result=>{
       alert('Se ha modificado')
+      this.edit=false;
     }).catch(error=>{
       alert('No se modifico')
     })
