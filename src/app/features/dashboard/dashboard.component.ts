@@ -31,21 +31,7 @@ export class DashboardComponent {
       email : email,
       password: password
     }
-    // this.authService.login(data).then(result=>{
-    //   console.log('este es el resultado -->', result)
-    //   console.log('este es UID->',result.user.uid)
-    //   const  uid : NavigationExtras ={
-    //     queryParams:{
-    //       uid: result.user.uid
-    //     }
-    //   }
-    //   this.router.navigate(['home'], uid);
-
-
-
-    // }).catch(error=>{
-    //   console.error('error en login -->', error)
-    // })
+    
    this.authService.login(data).then(result =>{
     console.log('este es el resultado->',result.user.uid)
     

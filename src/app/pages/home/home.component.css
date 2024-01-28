@@ -191,6 +191,7 @@ body {
     background: #fff;
     margin-top: -1px;
   }
+  
   @-moz-keyframes envelope-front {
     0% {
       top: 10em;
@@ -343,4 +344,47 @@ body {
       position: relative;
     }
   }
+  /* home.component.css */
+
+/* Estilos para la lista */
+.lista-elementos {
+  list-style: none;
+  padding: 0;
+}
+
+.elemento-lista {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.elemento-lista:hover {
+  background-color: #f0f0f0;
+}
+
+.elemento-activo {
+  background-color: #e0e0e0;
+}
+
+/* Estilos para la sección de detalles */
+#detalles {
+  display: none;
+  margin-top: 20px;
+}
+
+#detalles.visible {
+  display: block;
+}
+
+.detalle-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+/* Ajusta estos estilos según tus preferencias */
+
+  
+
   
